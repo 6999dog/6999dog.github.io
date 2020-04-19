@@ -20,13 +20,13 @@
 <meta property="og:description" content="昨天晚上的时候准备写ACM试题，真的绝了看着题目分析了一下思路，马上就能想到该怎么写但是我实际写的时候由于一些晓得细节和语法连连报错从今天开始把C语言捡起来">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-04-19T04:20:27.000Z">
-<meta property="article:modified_time" content="2020-04-19T11:32:12.645Z">
+<meta property="article:modified_time" content="2020-04-19T11:36:28.104Z">
 <meta property="article:author" content="Lu Gang">
 <meta property="article:tag" content="C语言">
 <meta name="twitter:card" content="summary">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/gh/nexmoe/nexmoe.github.io@latest/css/style.css,npm/highlight.js@9.15.8/styles/atom-one-dark.css,gh/nexmoe/nexmoe.github.io@latest/lib/mdui_043tiny/css/mdui.css,gh/nexmoe/nexmoe.github.io@latest/lib/iconfont/iconfont.css" crossorigin>
   
-  <!--<link rel="stylesheet" href="/css/style.css?v=1587295937996">-->
+  <!--<link rel="stylesheet" href="/css/style.css?v=1587296193856">-->
 
   
 <meta name="generator" content="Hexo 4.2.0"></head>
@@ -151,7 +151,7 @@
   
   <div class="nexmoe-post-meta nexmoe-rainbow" style="margin:10px 0!important;">
     <a><i class="nexmoefont icon-calendar-fill"></i>2020年04月19日</a>
-    <a><i class="nexmoefont icon-areachart"></i>791 字</a>
+    <a><i class="nexmoefont icon-areachart"></i>822 字</a>
     <a><i class="nexmoefont icon-time-circle-fill"></i>大概 3 分钟</a>
 </div>
 
@@ -175,27 +175,29 @@
 <li>发现自己写代码的时候没有注释的习惯，很多时候自己都看不懂自己的代码<br> 这一点必须马上改过来</li>
 </ol>
 <h3 id="正式开始我捡起C语言的行动了"><a href="#正式开始我捡起C语言的行动了" class="headerlink" title="正式开始我捡起C语言的行动了"></a>正式开始我捡起C语言的行动了</h3><ol>
-<li><p>字符和字符串的表示<br>‘a’单引号里面只能用一个字符<br>“snai”双引号里面可以引用多个字符</p>
+<li><p>字符和字符串的表示<br>*’a’单引号里面只能用一个字符<br>*”snai”双引号里面可以引用多个字符</p>
 </li>
-<li><p>变量的声明<br>-extern表示这个变量在其他的地方应用，不需要存储空间<br>-例如：</p>
+<li><p>变量的声明<br>*extern表示这个变量在其他的地方应用，不需要存储空间<br>*例如：<br>*#include &lt;stdio.h&gt;</p>
 <blockquote>
-<p>#include &lt;stdio.h&gt;<br>/<em>外部变量声明</em>/<br>extern int x ;<br>extern int y ;<br>int addtwonum()<br>{<br>   return x+y;<br>}</p>
+<p>/<em>外部变量声明</em>/<br>extern int x ;<br>extern int y ;<br>int addtwonum()<br>{<br>   return x+y;<br>}</p>
 </blockquote>
 </li>
-<li><p>定义常量<br>-使用#define在头文件下面声明<br>-使用const关键字在数据前面声明 const int x =10;</p>
+<li><p>定义常量<br>*使用#define在头文件下面声明<br>*使用const关键字在数据前面声明 const int x =10;</p>
 </li>
-<li><p>运算符<br>-刚刚在运算符里面看到了<em>，我一直以为是单纯的指针<br>-</em>运算符的作用就是指向一个变量<br>-后续在指针里面继续思考</p>
+<li><p>运算符<br><em>刚刚在运算符里面看到了</em>，我一直以为是单纯的指针<br>**运算符的作用就是指向一个变量<br>*后续在指针里面继续思考</p>
 </li>
-<li><p>循环<br>-其实循环这个没有什么好说的<br>-但是我觉得最重要的就是自己的思维要清晰<br>-控制好循环的次数，不要陷入死循环</p>
+<li><p>循环<br>*其实循环这个没有什么好说的<br>*但是我觉得最重要的就是自己的思维要清晰<br>*控制好循环的次数，不要陷入死循环</p>
 </li>
-<li><p>函数<br>-这一块带给我的疑惑就是传值的方式问题<br>-我绝大多数的时候都是直接使用了传值调用的方法<br>-我不会用引用方式传入函数，这里放个例子吧<br>-后续的过程中我会一直加油练习编程，用实操来锻炼自己</p>
+<li><p>函数<br>*这一块带给我的疑惑就是传值的方式问题<br>*我绝大多数的时候都是直接使用了传值调用的方法<br>*我不会用引用方式传入函数，这里放个例子吧<br>*后续的过程中我会一直加油练习编程，用实操来锻炼自己</p>
 <blockquote>
-<p>#include &lt;stdio.h&gt;<br>/* 函数声明 <em>/<br>void swap(int *x, int *y);<br>int main ()<br>{<br>  /</em> 局部变量定义 <em>/<br>  int a = 100;<br>  int b = 200;<br>  printf(“交换前，a 的值： %d\n”, a );<br>  printf(“交换前，b 的值： %d\n”, b );<br>  /</em> 调用函数来交换值</p>
-<ul>
-<li>&amp;a 表示指向 a 的指针，即变量 a 的地址</li>
-<li>&amp;b 表示指向 b 的指针，即变量 b 的地址<br>*/<br>swap(&amp;a, &amp;b);<br>printf(“交换后，a 的值： %d\n”, a );<br>printf(“交换后，b 的值： %d\n”, b );<br>return 0;<br>}</li>
+<p>#include &lt;stdio.h&gt;<br>/* 函数声明 <em>/<br>void swap(int *x, int *y);<br>int main ()<br>{<br>  /</em> 局部变量定义 */<br>  int a = 100;<br>  int b = 200;<br>  printf(“交换前，a 的值： %d\n”, a );<br>  printf(“交换前，b 的值： %d\n”, b );<br>  / * 调用函数来交换值</p>
+<pre><code>&amp;a 表示指向 a 的指针，即变量 a 的地址
+&amp;b 表示指向 b 的指针，即变量 b 的地址</code></pre><ul>
+<li>/<br>swap(&amp;a, &amp;b);<br>printf(“交换后，a 的值： %d\n”, a );<br> printf(“交换后，b 的值： %d\n”, b );<br>return 0;<br>}</li>
 </ul>
 </blockquote>
+</li>
+<li><p>数组<br>*这里其实还是指针的事，通过指针来传递数组<br>*还有熟悉如何定义数组</p>
 </li>
 </ol>
 
@@ -243,7 +245,7 @@
   </div>
   <script src="https://cdn.jsdelivr.net/combine/npm/lazysizes@5.1.0/lazysizes.min.js,gh/highlightjs/cdn-release@9.15.8/build/highlight.min.js,npm/mdui@0.4.3/dist/js/mdui.min.js,gh/nexmoe/nexmoe.github.io@latest/js/app.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
-<!--<script src="/js/app.js?v=1587295937997"></script>-->
+<!--<script src="/js/app.js?v=1587296193858"></script>-->
 
 
     <script src="https://cdn.jsdelivr.net/gh/xtaodada/xtaodada.github.io@0.0.2/copy.js"></script>
