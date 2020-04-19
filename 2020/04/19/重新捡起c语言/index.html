@@ -20,13 +20,13 @@
 <meta property="og:description" content="昨天晚上的时候准备写ACM试题，真的绝了看着题目分析了一下思路，马上就能想到该怎么写但是我实际写的时候由于一些晓得细节和语法连连报错从今天开始把C语言捡起来">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-04-19T04:20:27.000Z">
-<meta property="article:modified_time" content="2020-04-19T11:39:58.003Z">
+<meta property="article:modified_time" content="2020-04-19T14:18:13.159Z">
 <meta property="article:author" content="Lu Gang">
 <meta property="article:tag" content="C语言">
 <meta name="twitter:card" content="summary">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/gh/nexmoe/nexmoe.github.io@latest/css/style.css,npm/highlight.js@9.15.8/styles/atom-one-dark.css,gh/nexmoe/nexmoe.github.io@latest/lib/mdui_043tiny/css/mdui.css,gh/nexmoe/nexmoe.github.io@latest/lib/iconfont/iconfont.css" crossorigin>
   
-  <!--<link rel="stylesheet" href="/css/style.css?v=1587296404403">-->
+  <!--<link rel="stylesheet" href="/css/style.css?v=1587305908649">-->
 
   
 <meta name="generator" content="Hexo 4.2.0"></head>
@@ -151,8 +151,8 @@
   
   <div class="nexmoe-post-meta nexmoe-rainbow" style="margin:10px 0!important;">
     <a><i class="nexmoefont icon-calendar-fill"></i>2020年04月19日</a>
-    <a><i class="nexmoefont icon-areachart"></i>824 字</a>
-    <a><i class="nexmoefont icon-time-circle-fill"></i>大概 3 分钟</a>
+    <a><i class="nexmoefont icon-areachart"></i>2.1k 字</a>
+    <a><i class="nexmoefont icon-time-circle-fill"></i>大概 8 分钟</a>
 </div>
 
   <div class="nexmoe-post-right">
@@ -190,13 +190,37 @@
 </li>
 <li><p>函数<br>-这一块带给我的疑惑就是传值的方式问题<br>-我绝大多数的时候都是直接使用了传值调用的方法<br>-我不会用引用方式传入函数，这里放个例子吧<br>-后续的过程中我会一直加油练习编程，用实操来锻炼自己</p>
 <blockquote>
-<p>#include &lt;stdio.h&gt;<br>/* 函数声明 <em>/<br>void swap(int *x, int *y);<br>int main ()<br>{<br>  /</em> 局部变量定义 */<br>  int a = 100;<br>  int b = 200;<br>  printf(“交换前，a 的值： %d\n”, a );<br>  printf(“交换前，b 的值： %d\n”, b );<br>  /  调用函数来交换值</p>
-<pre><code>&amp;a 表示指向 a 的指针，即变量 a 的地址
-&amp;b 表示指向 b 的指针，即变量 b 的地址</code></pre><p>  /<br>   swap(&amp;a, &amp;b);<br>   printf(“交换后，a 的值： %d\n”, a );</p>
-<pre><code>printf(&quot;交换后，b 的值： %d\n&quot;, b ); </code></pre><p>   return 0;<br>}</p>
+<p>#include &lt;stdio.h&gt;<br>/* 函数声明 <em>/<br>void swap(int *x, int *y);<br>int main ()<br>{<br>  /</em> 局部变量定义 */<br>  int a = 100;<br>  int b = 200;<br>  printf(“交换前，a 的值： %d\n”, a );<br>  printf(“交换前，b 的值： %d\n”, b );<br>  /调用函数来交换值<br>  &amp;a 表示指向 a 的指针，即变量 a 的地址<br>  &amp;b 表示指向 b 的指针，即变量 b 的地址<br>  /<br>   swap(&amp;a, &amp;b);<br>   printf(“交换后，a 的值： %d\n”, a );<br>   printf(“交换后，b 的值： %d\n”, b );<br>   return 0;<br>}</p>
 </blockquote>
 </li>
-<li><p>数组<br>-这里其实还是指针的事，通过指针来传递数组<br>-还有熟悉如何定义数组</p>
+<li><p>数组<br>-这里其实还是指针的事，通过指针来传递数组<br>-还有熟悉如何定义数组<br>-如果希望可以得到一个返回数组的函数，就要声明一个指针的函数<br>-这里还要补充的就是关于指向数组的指针</p>
+<pre><code>声明一个指针  int *P;
+声明一个数组  int double[5];
+那么如何用指针来控制数组输出呢</code></pre><p> p=double;<br> *(double+0)<br> *(double+1)<br> *(p+0)<br> *(p+1)<br> 可以采用这样的方式进行输出数组元素</p>
+</li>
+<li><p>枚举<br>-关键字：enum<br>-对于枚举给我的感受就是定义起来像数据结构，使用起来像数组</p>
+</li>
+<li><p>指针<br>-指针是一个变量，其值为另一个变量的地址<br>-如何使用指针？<br>-定义一个指针变量、把变量地址赋值给指针、访问指针变量中可用地址的值<br>-声明一个指针p，p就是代表存储地址，*p就是值<br>-声明一个变量p，&amp;p才是存储地址，p是值<br>-声明一个指针ptr,ptr++就是指向下一个地址<br>-在传递函数的时候指针的参数要写变量的地址<br>-函数指针是指向函数的指针变量。<br>-通常我们说的指针变量是指向一个整型、字符型或数组等变量，而函数指针是指向函数。<br>-函数指针可以像一般函数一样，用于调用函数、传递参数。</p>
+<blockquote>
+<p>#include &lt;stdio.h&gt;<br>int max(int x, int y)<br>{<br>   return x &gt; y ? x : y;<br>}<br>int main(void)<br>{<br>   /* p 是函数指针 <em>/<br>   int (</em> p)(int, int) = &amp; max; // &amp;可以省略<br>   int a, b, c, d;<br>   printf(“请输入三个数字:”);<br>   scanf(“%d %d %d”, &amp; a, &amp; b, &amp; c);<br>   /* 与直接调用函数等价，d = max(max(a, b), c) */<br>   d = p(p(a, b), c);<br>   printf(“最大的数字是: %d\n”, d);<br>   return 0;<br>}</p>
+</blockquote>
+</li>
+<li><p>字符串<br>-在C语言中，字符串实际上是使用 null 字符 ‘\0’ 终止的一维字符数组。<br>-char greeting[6] = {‘H’, ‘e’, ‘l’, ‘l’, ‘o’, ‘\0’};<br>-char greeting[] = “Hello”;<br>ps:我觉得C语言跟其他的语言来说，规范真的超级重要<br>-strcpy(s1, s2);//复制字符串 s2 到字符串 s1。<br>-strcat(s1, s2);//连接字符串 s2 到字符串 s1 的末尾。<br>-strlen(s1);//返回字符串 s1 的长度。<br>-strcmp(s1, s2);//如果 s1 和 s2 是相同的，则返回 0；如果 s1 &lt; s2 则返回小于 0；如果 s1&gt;s2 则返回大于 0。<br>-strchr(s1, ch);//返回一个指针，指向字符串 s1 中字符 ch 的第一次出现的位置。<br>-strstr(s1, s2);//返回一个指针，指向字符串 s1 中字符串 s2 的第一次出现的位置。</p>
+</li>
+<li><p>结构体<br>-关键词 struct<br>-定义方法</p>
+<blockquote>
+<p>struct<br>{<br>   int a;<br>   char b;<br>   double c;<br>} s1;<br>struct SIMPLE<br>{<br>   int a;<br>   char b;<br>   double c;<br>};<br>-指向结构的指针<br>在访问其成员的时候要用到-&gt;访问;<br>普通方式就是s1.a;</p>
+</blockquote>
+</li>
+<li><p>位域<br>-这个是我很陌生的区域，因为之前没有遇到过<br>-位域的定义跟结构的定义差不多，在使用的时候需要在变量的后面：（长度）<br>-使用位域的好处就是节省了空间<br>-位域依旧有指针形式（无处不在的指针）</p>
+</li>
+<li><p>共用体<br>-关键词 union<br>-共用体是一种特殊的数据类型，允许您在相同的内存位置存储不同的数据类型<br>-其定义形式跟结构体差不多</p>
+</li>
+<li><p>typeof<br>-C 语言提供了 typedef 关键字，您可以使用它来为类型取一个新的名字<br>-typeof和#define的区别<br>#define 是 C 指令，用于为各种数据类型定义别名，与 typedef 类似，但是它们有以下几点不同：<br>  typedef 仅限于为类型定义符号名称，#define 不仅可以为类型定义别名，也能为数值定义别名，比如您可以定义 1 为 ONE。<br>  typedef 是由编译器执行解释的，#define 语句是由预编译器进行处理的。</p>
+</li>
+<li><p>输入和输出<br>-在字符串中有getchar()和putchar()<br>-gets()和puts()</p>
+</li>
+<li><p>文件的读写<br>-形式<br>-r //打开一个已有的文本文件，允许读取文件。<br>-w //打开一个文本文件，允许写入文件。如果文件不存在，则会创建一个新文件。在这里，您的程序会从文件的开头写入内容。如果文件存在，则该会被截断为零长度，重新写入。<br>-a //打开一个文本文件，以追加模式写入文件。如果文件不存在，则会创建一个新文件。在这里，您的程序会在已有的文件内容中追加内容。<br>-r+ //打开一个文本文件，允许读写文件。<br>-w+ //打开一个文本文件，允许读写文件。如果文件已存在，则文件会被截断为零长度，如果文件不存在，则会创建一个新文件。<br>-a+ //打开一个文本文件，允许读写文件。如果文件不存在，则会创建一个新文件。读取会从文件的开头开始，写入则只能是追加模式。</p>
 </li>
 </ol>
 
@@ -244,7 +268,7 @@
   </div>
   <script src="https://cdn.jsdelivr.net/combine/npm/lazysizes@5.1.0/lazysizes.min.js,gh/highlightjs/cdn-release@9.15.8/build/highlight.min.js,npm/mdui@0.4.3/dist/js/mdui.min.js,gh/nexmoe/nexmoe.github.io@latest/js/app.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
-<!--<script src="/js/app.js?v=1587296404406"></script>-->
+<!--<script src="/js/app.js?v=1587305908650"></script>-->
 
 
     <script src="https://cdn.jsdelivr.net/gh/xtaodada/xtaodada.github.io@0.0.2/copy.js"></script>
