@@ -4,7 +4,7 @@
 
 <head>
   
-  <title>Archive：2020/4 - Lu Gang</title>
+  <title>重新捡起c语言（一） - Lu Gang</title>
   <meta charset="UTF-8">
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
@@ -12,16 +12,21 @@
   
 
   <link rel="shortcut icon" href="/favicon.ico" type="image/png" />
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Lu Gang">
-<meta property="og:url" content="http://6999dog.github.io/archives/2020/04/index.html">
+  <meta name="description" content="昨天晚上的时候准备写ACM试题，真的绝了看着题目分析了一下思路，马上就能想到该怎么写但是我实际写的时候由于一些晓得细节和语法连连报错从今天开始把C语言捡起来">
+<meta property="og:type" content="article">
+<meta property="og:title" content="重新捡起c语言（一）">
+<meta property="og:url" content="http://6999dog.github.io/2020/04/19/%E9%87%8D%E6%96%B0%E6%8D%A1%E8%B5%B7c%E8%AF%AD%E8%A8%80/index.html">
 <meta property="og:site_name" content="Lu Gang">
+<meta property="og:description" content="昨天晚上的时候准备写ACM试题，真的绝了看着题目分析了一下思路，马上就能想到该怎么写但是我实际写的时候由于一些晓得细节和语法连连报错从今天开始把C语言捡起来">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-04-19T04:20:27.000Z">
+<meta property="article:modified_time" content="2020-04-19T04:32:48.870Z">
 <meta property="article:author" content="Lu Gang">
+<meta property="article:tag" content="C语言">
 <meta name="twitter:card" content="summary">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/gh/nexmoe/nexmoe.github.io@latest/css/style.css,npm/highlight.js@9.15.8/styles/atom-one-dark.css,gh/nexmoe/nexmoe.github.io@latest/lib/mdui_043tiny/css/mdui.css,gh/nexmoe/nexmoe.github.io@latest/lib/iconfont/iconfont.css" crossorigin>
   
-  <!--<link rel="stylesheet" href="/css/style.css?v=1587270777140">-->
+  <!--<link rel="stylesheet" href="/css/style.css?v=1587270777158">-->
 
   
 <meta name="generator" content="Hexo 4.2.0"></head>
@@ -136,66 +141,86 @@
   </div>
   <div id="nexmoe-content">
     <div class="nexmoe-primary">
-        
-<section class="nexmoe-archives">
+        <div class="nexmoe-post">
+  
+      <div class="nexmoe-post-cover" style="padding-bottom: 66.66666666666666%;"> 
+          <img data-src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=107794154,306951039&fm=26&gp=0.jpg" data-sizes="auto" alt="重新捡起c语言（一）" class="lazyload">
+          <h1>重新捡起c语言（一）</h1>
+      </div>
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow" style="margin:10px 0!important;">
+    <a><i class="nexmoefont icon-calendar-fill"></i>2020年04月19日</a>
+    <a><i class="nexmoefont icon-areachart"></i>356 字</a>
+    <a><i class="nexmoefont icon-time-circle-fill"></i>大概 1 分钟</a>
+</div>
 
-    <article>
-        
+  <div class="nexmoe-post-right">
+    
+  </div>
 
-        
-    </article>
+  <article>
+    <blockquote>
+<p>昨天晚上的时候准备写ACM试题，真的绝了<br>看着题目分析了一下思路，马上就能想到该怎么写<br>但是我实际写的时候由于一些晓得细节和语法连连报错<br>从今天开始把C语言捡起来</p>
+</blockquote>
+<a id="more"></a>
+<p>###首先就来谈谈我昨天遇到的问题吧</p>
+<ol>
+<li>在main函数的末尾，我就没有写return 0;<br>后来我就去查了一下它的作用<br>return 0; 语句用于表示退出程序</li>
+<li>昨天在写字符串的判断的时候直接就写了字符串并没有声明<br> char desc = “desc”<br> 这样之后才没有报错</li>
+<li>在使用指针数组的时候没有开辟空间<br> 对头文件的使用也王的一干二净<blockquote>
+<p>科普一下：stdio.h 是一个头文件 (标准输入输出头文件) ,<br>#include 是一个预处理命令，用来引入头文件。<br>当编译器遇到 printf() 函数时，如果没有找到 stdio.h 头文件，<br>会发生编译错误<br> 由此可见对于头文件的引用会影响之后的语句</p>
+</blockquote>
+</li>
+<li>最近写多了网页js之类的语句<br> 习惯了用缩进来控制函数结构，<br> 很多语句都掉了{}</li>
+<li>发现自己写代码的时候没有注释的习惯，很多时候自己都看不懂自己的代码<br> 这一点必须马上改过来</li>
+</ol>
+
+  </article>
+
+  <div class="nexmoe-post-meta nexmoe-rainbow">
+    
+    
+        <a class="nexmoefont icon-tag-fill -link" href="/tags/C%E8%AF%AD%E8%A8%80/" rel="tag">C语言</a>
+    
+</div>
+
+  <div class="nexmoe-post-footer">
+    
+      
+  <div class="nexmoe-post-copyright">
+    <strong>Author：</strong>Lu Gang<br>
+    <strong>Link：</strong><a href="http://6999dog.github.io/2020/04/19/%E9%87%8D%E6%96%B0%E6%8D%A1%E8%B5%B7c%E8%AF%AD%E8%A8%80/" title="http:&#x2F;&#x2F;6999dog.github.io&#x2F;2020&#x2F;04&#x2F;19&#x2F;%E9%87%8D%E6%96%B0%E6%8D%A1%E8%B5%B7c%E8%AF%AD%E8%A8%80&#x2F;" target="_blank" rel="noopener">http:&#x2F;&#x2F;6999dog.github.io&#x2F;2020&#x2F;04&#x2F;19&#x2F;%E9%87%8D%E6%96%B0%E6%8D%A1%E8%B5%B7c%E8%AF%AD%E8%A8%80&#x2F;</a><br>
+    
+      <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+    
+  </div>
+
+
+    
+    <section class="nexmoe-comment">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.min.css">
+<div id="gitalk"></div>
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.min.js"></script>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        clientID: '80b2453b6d5f37ad6225',
+        clientSecret: '43e99fa852795c9a7b3eb924b2558c64b84bbdeb',
+        id: window.location.pathname,
+        repo: 'nexmoe.github.io',
+        owner: 'nexmoe',
+        admin: 'nexmoe'
+    })
+    gitalk.render('gitalk')
+</script>
 </section>
-
-<style>
-.nexmoe-archives article > *:first-child {
-    margin-top: 0;
-}
-.nexmoe-archives article > *:last-child {
-    margin-bottom: 0;
-}
-.nexmoe-archives ul {
-    list-style: none;
-    padding-left: 0!important;
-}
-.nexmoe-archives li {
-    position: relative;
-    padding: 10px 0;
-}
-.nexmoe-archives li::before {
-    content: "";
-    width: 14px;
-    height: 14px;
-    background: #ff4e6a;
-    display: inline-block;
-    vertical-align: middle;
-    margin-top: -2px;
-    margin-right: 11px;
-    border-radius: 100%;
-    border: 3px solid #fff;
-    z-index: 100;
-    position: relative;
-}
-.nexmoe-archives li::after {
-    content: "";
-    height: 100%;
-    width: 2px;
-    background: rgba(255, 78, 106, 0.2);
-    position: absolute;
-    left: 6px;
-    top: 20px;
-}
-.nexmoe-archives li:last-child:after {
-    display: none;
-}
-.nexmoe-archives span {
-    margin-right: 15px;
-}
-</style>
+  </div>
+</div>
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/combine/npm/lazysizes@5.1.0/lazysizes.min.js,gh/highlightjs/cdn-release@9.15.8/build/highlight.min.js,npm/mdui@0.4.3/dist/js/mdui.min.js,gh/nexmoe/nexmoe.github.io@latest/js/app.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
-<!--<script src="/js/app.js?v=1587270777142"></script>-->
+<!--<script src="/js/app.js?v=1587270777160"></script>-->
 
 
     <script src="https://cdn.jsdelivr.net/gh/xtaodada/xtaodada.github.io@0.0.2/copy.js"></script>
