@@ -4,7 +4,7 @@
 
 <head>
   
-  <title>Archive：2020 - Lu Gang</title>
+  <title>shell编程 - Lu Gang</title>
   <meta charset="UTF-8">
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
@@ -12,16 +12,21 @@
   
 
   <link rel="shortcut icon" href="/favicon.ico" type="image/png" />
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Lu Gang">
-<meta property="og:url" content="http://6999dog.github.io/archives/2020/index.html">
+  <meta name="description" content="shell学习最近在看脚本，有一些基本功不是很扎实，所以记录一下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="shell编程">
+<meta property="og:url" content="http://6999dog.github.io/2020/06/10/shell%E7%BC%96%E7%A8%8B/index.html">
 <meta property="og:site_name" content="Lu Gang">
+<meta property="og:description" content="shell学习最近在看脚本，有一些基本功不是很扎实，所以记录一下">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-06-10T06:58:39.000Z">
+<meta property="article:modified_time" content="2020-06-10T07:35:46.260Z">
 <meta property="article:author" content="Lu Gang">
+<meta property="article:tag" content="shell">
 <meta name="twitter:card" content="summary">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/gh/nexmoe/nexmoe.github.io@latest/css/style.css,npm/highlight.js@9.15.8/styles/atom-one-dark.css,gh/nexmoe/nexmoe.github.io@latest/lib/mdui_043tiny/css/mdui.css,gh/nexmoe/nexmoe.github.io@latest/lib/iconfont/iconfont.css" crossorigin>
   
-  <!--<link rel="stylesheet" href="/css/style.css?v=1591774557604">-->
+  <!--<link rel="stylesheet" href="/css/style.css?v=1591774557595">-->
 
   
 <meta name="generator" content="Hexo 4.2.0"></head>
@@ -136,66 +141,113 @@
   </div>
   <div id="nexmoe-content">
     <div class="nexmoe-primary">
-        
-<section class="nexmoe-archives">
+        <div class="nexmoe-post">
+  
+      <div class="nexmoe-post-cover" style="padding-bottom: 66.66666666666666%;"> 
+          <img data-src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=107794154,306951039&fm=26&gp=0.jpg" data-sizes="auto" alt="shell编程" class="lazyload">
+          <h1>shell编程</h1>
+      </div>
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow" style="margin:10px 0!important;">
+    <a><i class="nexmoefont icon-calendar-fill"></i>2020年06月10日</a>
+    <a><i class="nexmoefont icon-areachart"></i>371 字</a>
+    <a><i class="nexmoefont icon-time-circle-fill"></i>大概 1 分钟</a>
+</div>
 
-    <article>
-        
+  <div class="nexmoe-post-right">
+    
+  </div>
 
-        
-    </article>
+  <article>
+    <h3 id="shell学习"><a href="#shell学习" class="headerlink" title="shell学习"></a>shell学习</h3><p>最近在看脚本，有一些基本功不是很扎实，所以记录一下</p>
+<a id="more"></a>
+
+<h3 id="在书写shell脚本的第一步就是书写-bin-bash-意思就是声明bash"><a href="#在书写shell脚本的第一步就是书写-bin-bash-意思就是声明bash" class="headerlink" title="在书写shell脚本的第一步就是书写 #!/bin/bash 意思就是声明bash"></a>在书写shell脚本的第一步就是书写 #!/bin/bash 意思就是声明bash</h3><h3 id="一定-不可以忘记的就是给权限执行-chmod-777-sh"><a href="#一定-不可以忘记的就是给权限执行-chmod-777-sh" class="headerlink" title="一定 不可以忘记的就是给权限执行  chmod  777 *.sh"></a>一定 不可以忘记的就是给权限执行  chmod  777 *.sh</h3><ul>
+<li><p>在shell中单引号和双引号有的时候一样，有的时候不一样，在含有特殊字符的时候，要想保留特殊字符的意义，就要使用双引号</p>
+</li>
+<li><p>set命令是查看所有的变量，可以用grep进行辅助筛选</p>
+</li>
+<li><p>删除变量就是unset 变量名（不需要$)</p>
+</li>
+<li><p>给shell文件加上可执行权限 chmod -x  *.sh</p>
+</li>
+<li><p>位置变量：$0这个程序的文件名   $n 这个程序的第N个参数值</p>
+</li>
+<li><p>特殊变量</p>
+<blockquote>
+<p>$*  这个程序的所有参数</p>
+<p>$#  这个程序的参数个数</p>
+<p>$$  这个程序的PID   </p>
+<p>$!  执行上一个后台程序的PID</p>
+<p>$?  执行上一个指令的返回值</p>
+</blockquote>
+</li>
+<li><p>read命令：交互</p>
+<p> 参数   -p 加入提示性语句</p>
+<p>​            -n  字符个数</p>
+<p>​            -t   等待时间</p>
+<p>作用： 从键盘读入数据，赋给变量</p>
+<p>在执行read之后可以自己自定义输入，就相当于C语言里面写了printf和scanf</p>
+</li>
+<li><p>expr 命令</p>
+<p>作用：shell变量的算术运算</p>
+<p>中间必须有空格 例如：expr 3 + 2</p>
+<p>乘法运算必须使用到\转义 expr 3 \* 2</p>
+<ul>
+<li><p>算术运算在脚本中的使用</p>
+</li>
+<li><p>使用反引号，把运算结果赋值给变量</p>
+</li>
+</ul>
+</li>
+</ul>
+
+  </article>
+
+  <div class="nexmoe-post-meta nexmoe-rainbow">
+    
+    
+        <a class="nexmoefont icon-tag-fill -link" href="/tags/shell/" rel="tag">shell</a>
+    
+</div>
+
+  <div class="nexmoe-post-footer">
+    
+      
+  <div class="nexmoe-post-copyright">
+    <strong>Author：</strong>Lu Gang<br>
+    <strong>Link：</strong><a href="http://6999dog.github.io/2020/06/10/shell%E7%BC%96%E7%A8%8B/" title="http:&#x2F;&#x2F;6999dog.github.io&#x2F;2020&#x2F;06&#x2F;10&#x2F;shell%E7%BC%96%E7%A8%8B&#x2F;" target="_blank" rel="noopener">http:&#x2F;&#x2F;6999dog.github.io&#x2F;2020&#x2F;06&#x2F;10&#x2F;shell%E7%BC%96%E7%A8%8B&#x2F;</a><br>
+    
+      <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+    
+  </div>
+
+
+    
+    <section class="nexmoe-comment">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.min.css">
+<div id="gitalk"></div>
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.min.js"></script>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        clientID: '80b2453b6d5f37ad6225',
+        clientSecret: '43e99fa852795c9a7b3eb924b2558c64b84bbdeb',
+        id: window.location.pathname,
+        repo: 'nexmoe.github.io',
+        owner: 'nexmoe',
+        admin: 'nexmoe'
+    })
+    gitalk.render('gitalk')
+</script>
 </section>
-
-<style>
-.nexmoe-archives article > *:first-child {
-    margin-top: 0;
-}
-.nexmoe-archives article > *:last-child {
-    margin-bottom: 0;
-}
-.nexmoe-archives ul {
-    list-style: none;
-    padding-left: 0!important;
-}
-.nexmoe-archives li {
-    position: relative;
-    padding: 10px 0;
-}
-.nexmoe-archives li::before {
-    content: "";
-    width: 14px;
-    height: 14px;
-    background: #ff4e6a;
-    display: inline-block;
-    vertical-align: middle;
-    margin-top: -2px;
-    margin-right: 11px;
-    border-radius: 100%;
-    border: 3px solid #fff;
-    z-index: 100;
-    position: relative;
-}
-.nexmoe-archives li::after {
-    content: "";
-    height: 100%;
-    width: 2px;
-    background: rgba(255, 78, 106, 0.2);
-    position: absolute;
-    left: 6px;
-    top: 20px;
-}
-.nexmoe-archives li:last-child:after {
-    display: none;
-}
-.nexmoe-archives span {
-    margin-right: 15px;
-}
-</style>
+  </div>
+</div>
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/combine/npm/lazysizes@5.1.0/lazysizes.min.js,gh/highlightjs/cdn-release@9.15.8/build/highlight.min.js,npm/mdui@0.4.3/dist/js/mdui.min.js,gh/nexmoe/nexmoe.github.io@latest/js/app.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
-<!--<script src="/js/app.js?v=1591774557606"></script>-->
+<!--<script src="/js/app.js?v=1591774557597"></script>-->
 
 
     <script src="https://cdn.jsdelivr.net/gh/xtaodada/xtaodada.github.io@0.0.2/copy.js"></script>
