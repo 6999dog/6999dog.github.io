@@ -1,0 +1,81 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 网络工程 · Lu Gang</title><meta name="description" content="网络工程 - Lu Gang"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/css/prontera.css"><link rel="search" type="application/opensearchdescription+xml" href="http://6999dog.github.io/atom.xml" title="Lu Gang"><meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="Lu Gang" type="application/atom+xml">
+</head><body><header class="feature-header"><nav class="component-nav"><ul><div class="logo-container"><a href="/"><h2 class="title">Lu Gang</h2></a></div><a href="/" target="_self" class="li component-nav-item"><p>主页</p></a><a href="/archives" target="_self" class="li component-nav-item"><p>归档</p></a><ul class="shortcut-icons"><a href="https://github.com/AngryPowman" target="_blank"><img src="/images/github.svg" class="icon"></a><a href="/atom.xml" target="_blank"><img src="/images/rss.svg" class="icon"></a></ul></ul></nav></header><main class="container"><div id="post-container"><div class="post"><article class="post-block"><h1 class="post-title">网络工程</h1><div class="post-info">Apr 18, 2020</div><div class="post-content"><h2 id="网络工程"><a href="#网络工程" class="headerlink" title="网络工程"></a>网络工程</h2><blockquote>
+<p>因为之前计算机网络学的时候不是学的特别好所以很多东西都学的一般般</p>
+</blockquote>
+<h3 id="但是我觉得还是把最近的实验都总结一下吧"><a href="#但是我觉得还是把最近的实验都总结一下吧" class="headerlink" title="但是我觉得还是把最近的实验都总结一下吧"></a>但是我觉得还是把最近的实验都总结一下吧</h3><h3 id="所有的实验环境都是基于思科模拟器"><a href="#所有的实验环境都是基于思科模拟器" class="headerlink" title="所有的实验环境都是基于思科模拟器"></a>所有的实验环境都是基于思科模拟器</h3><a id="more"></a>
+
+<p><strong>实验1 交换机调试基础</strong></p>
+<p>实验目的</p>
+<ol>
+<li><p>熟悉Cisco Packet Tracer网络设备仿真软件的使用。</p>
+</li>
+<li><p>掌握通过Console口连接交换机并进入CLI（命令行界面）的方法。</p>
+</li>
+<li><p>熟悉交换机/路由器的常用命令，掌握配置设备名称、特权模式密码，和查看接口状态、MAC地址表的操作命令。</p>
+</li>
+<li><p>掌握开启交换机/路由器Telnet登录功能的操作命令，并能通过Telnet远程管理网络设备。</p>
+</li>
+</ol>
+<blockquote>
+<p>这个实验其实没有什么好讲的，无非就是一些思科的基本命令。多做点工作就可以掌握</p>
+</blockquote>
+<p>贴一些命令<br>交换机基本状态：</p>
+<blockquote>
+<p>switch:                                            ；交换机的ROM状态<br>rommon&gt;                                            ；路由器的ROM状态<br>hostname&gt;                                        ；用户模式<br>hostname#                                        ；特权模式<br>hostname(config)#                               ；全局配置模式<br>hostname(config-if)#                                ；接口状态</p>
+</blockquote>
+<p>交换机口令设置：</p>
+<blockquote>
+<p>switch&gt;enable                                      ；进入特权模式<br>switch#config terminal                            ；进入全局配置模式<br>switch(config)#hostname                 ；设置交换机的主机名<br>switch(config)#enable secret xxx                    ；设置特权加密口令<br>switch(config)#enable password xxa                ；设置特权非密口令<br>switch(config)#line console 0                   ；进入控制台口<br>switch(config-line)#line vty 0 4                    ；进入虚拟终端<br>switch(config-line)#login                          ；允许登录<br>switch(config-line)#password xx                    ；设置登录口令xx<br>switch#exit                                     ；返回命令</p>
+</blockquote>
+<p>交换机VLAN设置：</p>
+<blockquote>
+<p>switch#vlan database                                ；进入VLAN设置<br>switch(vlan)#vlan 2                                ；建VLAN 2<br>switch(vlan)#no vlan 2                            ；删vlan 2<br>switch(config)#int f0/1                         ；进入端口1<br>switch(config-if)#switchport access vlan 2       ；当前端口加入vlan 2<br>switch(config-if)#switchport mode trunk          ；设置为干线<br>switch(config-if)#switchport trunk allowed vlan 1,2 ；设置允许的vlan<br>switch(config-if)#switchport trunk encap dot1q    ；设置vlan 中继<br>switch(config)#vtp domain                     ；设置发vtp域名<br>switch(config)#vtp password                 ；设置发vtp密码<br>switch(config)#vtp mode server                   ；设置发vtp模式<br>switch(config)#vtp mode client                   ；设置发vtp模式</p>
+</blockquote>
+<p>交换机设置IP地址：</p>
+<blockquote>
+<p>switch(config)#interface vlan 1                    ；进入vlan 1<br>switch(config-if)#ip address           ；设置IP地址<br>switch(config)#ip default-gateway               ；设置默认网关<br>switch#dir flash:                               ；查看闪存</p>
+</blockquote>
+<p>交换机显示命令：</p>
+<blockquote>
+<p>switch#write                                     ；保存配置信息<br>switch#show vtp                                  ；查看vtp配置信息<br>switch#show run                                  ；查看当前配置信息<br>switch#show vlan                                  ；查看vlan配置信息<br>switch#show interface                            ；查看端口信息<br>switch#show int f0/0                                ；查看指定端口信息</p>
+</blockquote>
+<p>交换机VLAN设置：</p>
+<blockquote>
+<p>switch#vlan database ；进入VLAN设置<br>switch(vlan)#vlan 2 ；建VLAN 2<br>switch(vlan)#no vlan 2 ；删vlan 2<br>switch(config)#int f0/1 ；进入端口1<br>switch(config-if)#switchport access vlan 2 ；当前端口加入vlan 2<br>switch(config-if)#switchport mode trunk ；设置为干线<br>switch(config-if)#switchport trunk allowed vlan 1，2 ；设置允许的vlan  不明白<br>switch(config-if)#switchport trunk encap dot1q ；设置vlan 中继<br>何为中继，功能作用，二层到三层设置中继模式<br>switch(config)#vtp domain  ；设置发vtp域名  什么是vtp<br>switch(config)#vtp password  ；设置发vtp密码<br>switch(config)#vtp mode server ；设置发vtp模式<br>switch(config)#vtp mode client ；设置发vtp模式</p>
+</blockquote>
+<p><strong>实验2 VLAN划分和VLAN间通信</strong></p>
+<p>实验目的</p>
+<ol>
+<li><p>掌握基于交换机接口的VLAN原理以及IEEE802.1Q标准及帧格式。</p>
+</li>
+<li><p>掌握配置交换机VLAN的操作命令，并掌握批量配置交换机接口的方法。</p>
+</li>
+<li><p>掌握VLAN间通信的原理，及相关的操作命令。 </p>
+</li>
+</ol>
+<blockquote>
+<p>在这个实验中，设计自己的实验拓扑，选择相应的设备就可以了<br>需要注意的就是进入端口进行的vlan绑定</p>
+</blockquote>
+<p><strong>实验3 直连路由</strong></p>
+<p>实验目的</p>
+<ol>
+<li><p>掌握IP交付和转发的原理，深刻理解基于路由表的IP数据报转发机制。</p>
+</li>
+<li><p>掌握配置路由器接口的命令，以及查看路由表的方法。</p>
+</li>
+<li><p>掌握基于路由器直连路由的VLAN间通信配置方法。</p>
+</li>
+</ol>
+<blockquote>
+<p>这个实验基于实验2，取消三层交换机的ip转发，选择路由器的物理接口进行网关设置就可以了</p>
+</blockquote>
+<p>之后的实验也会陆续写下去的</p>
+</div></article></div><div id="disqus_thread"></div></div><script>var disqus_shortname = 'angrypowman';
+var disqus_identifier = '2020/04/18/网络工程/';
+var disqus_title = '网络工程';
+var disqus_url = 'http://6999dog.github.io/2020/04/18/网络工程/';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//angrypowman.disqus.com/count.js" async></script></main><footer class="footer-container"><div class="paginator"><a href="/2020/04/18/ACM-%E2%80%9C%E7%BB%BF%E7%9B%9F%E6%9D%AF%E2%80%9D%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%EF%BC%88%E4%B8%80%EF%BC%89/" class="prev">PREV</a><a href="/2020/04/18/hello-world/" class="next">NEXT</a></div><div class="copyright"><p>© 2017 - 2020 <a href="http://6999dog.github.io">Lu Gang</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/AngryPowman/hexo-theme-prontera" target="_blank">hexo-theme-prontera</a>.</p></div></footer><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"angrypowman",'auto');ga('send','pageview');</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"superSample":2,"width":200,"height":400,"position":"right","hOffset":0,"vOffset":-20},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.2},"log":false});</script></body></html>
