@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://6999dog.github.io/"/>
-  <updated>2020-06-23T10:47:51.962Z</updated>
+  <updated>2020-06-23T11:33:01.827Z</updated>
   <id>http://6999dog.github.io/</id>
   
   <author>
@@ -21,20 +21,20 @@
     <link href="http://6999dog.github.io/2020/06/23/hadoop%E8%8A%82%E7%82%B9%E7%9A%84%E5%A2%9E%E5%88%A0%E9%97%AE%E9%A2%98/"/>
     <id>http://6999dog.github.io/2020/06/23/hadoop%E8%8A%82%E7%82%B9%E7%9A%84%E5%A2%9E%E5%88%A0%E9%97%AE%E9%A2%98/</id>
     <published>2020-06-23T10:47:51.000Z</published>
-    <updated>2020-06-23T10:47:51.962Z</updated>
+    <updated>2020-06-23T11:33:01.827Z</updated>
     
-    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script>]]></content>
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h3 id="hadoop节点的增删问题"><a href="#hadoop节点的增删问题" class="headerlink" title="hadoop节点的增删问题"></a>hadoop节点的增删问题</h3><p>最近在虚拟机里面碰到了很多问题，主要是在Hadoop的时候遇到了很多不稳定的情况</p><p>有很多要注意的点，我写下来记录一下</p><a id="more"></a><ul><li><p>在进行格式化的时候最好只要一次，不然会造成集群可能起不来的情况。</p><p>那么会造成什么样的问题呢？</p><p>主要问题：在进行格式化的时候会造成clusterID不一样</p><p>datanode起不来的原因可以是：进行了namenode格式化操作。</p><p>每次进行namenode格式化都会清空namenode文件存放目录下的文件并产生一个新的clusterID，但不会清空datanode文件存放目录下的文件，也就是datanode文件存放目录下保存的clusterID还是之前的clusterID，这导致namenode下的clusterID和datanode下的clusterID不一致，无法建立起通信，所以datanode都起不来。<br>解决办法：找到clusterID的位置，然后改正一样的，就可以了。</p></li><li><p>注意：一定要编写好slaves文件，这里面存放的是节点数据。</p></li><li><p>如何进行Hadoop节点的增加？</p><ol><li><p>编写slaves文件，加入需要增加的节点</p></li><li><p>在hosts文件里面增加节点信息</p></li><li><p>在新增节点上面使用集群命令，开启datanode    </p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">hadoop-daemon.sh start datanode</span><br><span class="line"></span><br><span class="line">yarn-daemon.sh start nodemanager</span><br></pre></td></tr></table></figure></li></ol></li></ul><ul><li><p>如何进行Hadoop节点的移除？</p><ul><li>在namenode中打开hdfs-site.xml，设置节点排除文件的位置（绝对路径）  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;property&gt;</span><br><span class="line">　&lt;name&gt;dfs.hosts.exclude&lt;&#x2F;name&gt;</span><br><span class="line">  　  &lt;value&gt;&#x2F;usr&#x2F;hadoop-2.7.3&#x2F;etc&#x2F;hadoop&#x2F;excludes&lt;&#x2F;value&gt;</span><br><span class="line">&lt;&#x2F;property&gt;</span><br></pre></td></tr></table></figure></li></ul><p>​        注意：在这个value里面是自己安装hadoop的路径</p><ul><li><p>建立excludes文件，里面加入要删除节点的信息（IP）</p></li><li><p>更新datanode（在master上面操作）</p><pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs dfsadmin -refreshNodes</span><br></pre></td></tr></table></figure></code></pre></li></ul></li></ul><p>​                查看节点信息的命令（在master上面操作）</p><pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs dfsadmin -report</span><br></pre></td></tr></table></figure></code></pre><p>​                在要移除的节点的信息变成Decommissioned后就可以关闭该节点</p><p>​                在节点上操作</p><pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop-daemon.sh stop datanode</span><br></pre></td></tr></table></figure></code></pre><ul><li>重新加入新的节点<ul><li>删除excludes的信息</li><li>重新启动节点</li></ul></li></ul>]]></content>
     
     <summary type="html">
     
-      
-      
-        &lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;\assets\css\APlayer.min.css&quot;&gt;&lt;script src=&quot;\assets\js\APlayer.min.js&quot; cla
-      
+      &lt;h3 id=&quot;hadoop节点的增删问题&quot;&gt;&lt;a href=&quot;#hadoop节点的增删问题&quot; class=&quot;headerlink&quot; title=&quot;hadoop节点的增删问题&quot;&gt;&lt;/a&gt;hadoop节点的增删问题&lt;/h3&gt;&lt;p&gt;最近在虚拟机里面碰到了很多问题，主要是在Hadoop的时候遇到了很多不稳定的情况&lt;/p&gt;
+&lt;p&gt;有很多要注意的点，我写下来记录一下&lt;/p&gt;
     
     </summary>
     
     
+    
+      <category term="大数据" scheme="http://6999dog.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
     
   </entry>
   
@@ -192,27 +192,6 @@
   </entry>
   
   <entry>
-    <title>ACM--“绿盟杯”第一阶段（一）</title>
-    <link href="http://6999dog.github.io/2020/04/18/ACM-%E2%80%9C%E7%BB%BF%E7%9B%9F%E6%9D%AF%E2%80%9D%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%EF%BC%88%E4%B8%80%EF%BC%89/"/>
-    <id>http://6999dog.github.io/2020/04/18/ACM-%E2%80%9C%E7%BB%BF%E7%9B%9F%E6%9D%AF%E2%80%9D%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%EF%BC%88%E4%B8%80%EF%BC%89/</id>
-    <published>2020-04-18T10:29:53.000Z</published>
-    <updated>2020-06-22T04:27:44.111Z</updated>
-    
-    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>说实话，刚刚开始读大学的时候就有一种奇怪的心理，总觉得职高上来的人都很厉害<br>于是很多时候就直接否定了自己做不到，因此有很多时候我都在虚度自己的时间<br>有一天我突然就想通了，凭什么别人能做到的事情我就做不到<br>希望我一直能够保持自己努力上进的心态，一直学习</p><a id="more"></a><p>其实不准备写这个ACM的试题的，但是还是决定试一试</p><p>我真的明白了一个道理，虽然思路好想，但是太久没有写代码手真的很生<br>我的C语言都还给老师了吧，逐渐意识到自己是个菜鸡<br>最近一直在写网页和py的代码<br>形式和要求都没有C这么严格，所以写起C来真的有点心态崩<br>只能用我自己面向百度编程的方法一个一个捡起来</p><blockquote><p>题目<br>sortArray(int *arr,int number,int *sort)<br>就是实现一个自定义的排序</p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;说实话，刚刚开始读大学的时候就有一种奇怪的心理，总觉得职高上来的人都很厉害&lt;br&gt;于是很多时候就直接否定了自己做不到，因此有很多时候我都在虚度自己的时间&lt;br&gt;有一天我突然就想通了，凭什么别人能做到的事情我就做不到&lt;br&gt;希望我一直能够保持自己努力上进的心态，一直学习&lt;/p&gt;
-    
-    </summary>
-    
-    
-    
-      <category term="ACM" scheme="http://6999dog.github.io/tags/ACM/"/>
-    
-  </entry>
-  
-  <entry>
     <title>网络工程</title>
     <link href="http://6999dog.github.io/2020/04/18/%E7%BD%91%E7%BB%9C%E5%B7%A5%E7%A8%8B/"/>
     <id>http://6999dog.github.io/2020/04/18/%E7%BD%91%E7%BB%9C%E5%B7%A5%E7%A8%8B/</id>
@@ -233,6 +212,27 @@
     
     
       <category term="网络工程" scheme="http://6999dog.github.io/tags/%E7%BD%91%E7%BB%9C%E5%B7%A5%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ACM--“绿盟杯”第一阶段（一）</title>
+    <link href="http://6999dog.github.io/2020/04/18/ACM-%E2%80%9C%E7%BB%BF%E7%9B%9F%E6%9D%AF%E2%80%9D%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%EF%BC%88%E4%B8%80%EF%BC%89/"/>
+    <id>http://6999dog.github.io/2020/04/18/ACM-%E2%80%9C%E7%BB%BF%E7%9B%9F%E6%9D%AF%E2%80%9D%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%EF%BC%88%E4%B8%80%EF%BC%89/</id>
+    <published>2020-04-18T10:29:53.000Z</published>
+    <updated>2020-06-22T04:27:44.111Z</updated>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><p>说实话，刚刚开始读大学的时候就有一种奇怪的心理，总觉得职高上来的人都很厉害<br>于是很多时候就直接否定了自己做不到，因此有很多时候我都在虚度自己的时间<br>有一天我突然就想通了，凭什么别人能做到的事情我就做不到<br>希望我一直能够保持自己努力上进的心态，一直学习</p><a id="more"></a><p>其实不准备写这个ACM的试题的，但是还是决定试一试</p><p>我真的明白了一个道理，虽然思路好想，但是太久没有写代码手真的很生<br>我的C语言都还给老师了吧，逐渐意识到自己是个菜鸡<br>最近一直在写网页和py的代码<br>形式和要求都没有C这么严格，所以写起C来真的有点心态崩<br>只能用我自己面向百度编程的方法一个一个捡起来</p><blockquote><p>题目<br>sortArray(int *arr,int number,int *sort)<br>就是实现一个自定义的排序</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;说实话，刚刚开始读大学的时候就有一种奇怪的心理，总觉得职高上来的人都很厉害&lt;br&gt;于是很多时候就直接否定了自己做不到，因此有很多时候我都在虚度自己的时间&lt;br&gt;有一天我突然就想通了，凭什么别人能做到的事情我就做不到&lt;br&gt;希望我一直能够保持自己努力上进的心态，一直学习&lt;/p&gt;
+    
+    </summary>
+    
+    
+    
+      <category term="ACM" scheme="http://6999dog.github.io/tags/ACM/"/>
     
   </entry>
   

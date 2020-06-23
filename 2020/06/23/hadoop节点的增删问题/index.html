@@ -1,5 +1,59 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> hadoop节点的增删问题 · Lu Gang</title><meta name="description" content="hadoop节点的增删问题 - Lu Gang"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/css/prontera.css"><link rel="search" type="application/opensearchdescription+xml" href="http://6999dog.github.io/atom.xml" title="Lu Gang"><meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="Lu Gang" type="application/atom+xml">
-</head><body><header class="feature-header"><nav class="component-nav"><ul><div class="logo-container"><a href="/"><h2 class="title">Lu Gang</h2></a></div><a href="/" target="_self" class="li component-nav-item"><p>主页</p></a><a href="/archives" target="_self" class="li component-nav-item"><p>归档</p></a><ul class="shortcut-icons"><a href="https://github.com/AngryPowman" target="_blank"><img src="/images/github.svg" class="icon"></a><a href="/atom.xml" target="_blank"><img src="/images/rss.svg" class="icon"></a></ul></ul></nav></header><main class="container"><div id="post-container"><div class="post"><article class="post-block"><h1 class="post-title">hadoop节点的增删问题</h1><div class="post-info">Jun 23, 2020</div><div class="post-content"></div></article></div><div id="disqus_thread"></div></div><script>var disqus_shortname = 'angrypowman';
+</head><body><header class="feature-header"><nav class="component-nav"><ul><div class="logo-container"><a href="/"><h2 class="title">Lu Gang</h2></a></div><a href="/" target="_self" class="li component-nav-item"><p>主页</p></a><a href="/archives" target="_self" class="li component-nav-item"><p>归档</p></a><ul class="shortcut-icons"><a href="https://github.com/AngryPowman" target="_blank"><img src="/images/github.svg" class="icon"></a><a href="/atom.xml" target="_blank"><img src="/images/rss.svg" class="icon"></a></ul></ul></nav></header><main class="container"><div id="post-container"><div class="post"><article class="post-block"><h1 class="post-title">hadoop节点的增删问题</h1><div class="post-info">Jun 23, 2020</div><div class="post-content"><h3 id="hadoop节点的增删问题"><a href="#hadoop节点的增删问题" class="headerlink" title="hadoop节点的增删问题"></a>hadoop节点的增删问题</h3><p>最近在虚拟机里面碰到了很多问题，主要是在Hadoop的时候遇到了很多不稳定的情况</p>
+<p>有很多要注意的点，我写下来记录一下</p>
+<a id="more"></a>
+
+<ul>
+<li><p>在进行格式化的时候最好只要一次，不然会造成集群可能起不来的情况。</p>
+<p>那么会造成什么样的问题呢？</p>
+<p>主要问题：在进行格式化的时候会造成clusterID不一样</p>
+<p>datanode起不来的原因可以是：进行了namenode格式化操作。</p>
+<p>每次进行namenode格式化都会清空namenode文件存放目录下的文件并产生一个新的clusterID，但不会清空datanode文件存放目录下的文件，也就是datanode文件存放目录下保存的clusterID还是之前的clusterID，这导致namenode下的clusterID和datanode下的clusterID不一致，无法建立起通信，所以datanode都起不来。<br>解决办法：找到clusterID的位置，然后改正一样的，就可以了。</p>
+</li>
+<li><p>注意：一定要编写好slaves文件，这里面存放的是节点数据。</p>
+</li>
+<li><p>如何进行Hadoop节点的增加？</p>
+<ol>
+<li><p>编写slaves文件，加入需要增加的节点</p>
+</li>
+<li><p>在hosts文件里面增加节点信息</p>
+</li>
+<li><p>在新增节点上面使用集群命令，开启datanode    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">hadoop-daemon.sh start datanode</span><br><span class="line"></span><br><span class="line">yarn-daemon.sh start nodemanager</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+</li>
+</ul>
+<ul>
+<li><p>如何进行Hadoop节点的移除？</p>
+<ul>
+<li>在namenode中打开hdfs-site.xml，设置节点排除文件的位置（绝对路径）  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;property&gt;</span><br><span class="line">		　&lt;name&gt;dfs.hosts.exclude&lt;&#x2F;name&gt;</span><br><span class="line">  　	  &lt;value&gt;&#x2F;usr&#x2F;hadoop-2.7.3&#x2F;etc&#x2F;hadoop&#x2F;excludes&lt;&#x2F;value&gt;</span><br><span class="line">&lt;&#x2F;property&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>​        注意：在这个value里面是自己安装hadoop的路径</p>
+<ul>
+<li><p>建立excludes文件，里面加入要删除节点的信息（IP）</p>
+</li>
+<li><p>更新datanode（在master上面操作）</p>
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs dfsadmin -refreshNodes</span><br></pre></td></tr></table></figure></code></pre></li>
+</ul>
+</li>
+</ul>
+<p>​                查看节点信息的命令（在master上面操作）</p>
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs dfsadmin -report</span><br></pre></td></tr></table></figure></code></pre><p>​                在要移除的节点的信息变成Decommissioned后就可以关闭该节点</p>
+<p>​                在节点上操作</p>
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop-daemon.sh stop datanode</span><br></pre></td></tr></table></figure></code></pre><ul>
+<li>重新加入新的节点<ul>
+<li>删除excludes的信息</li>
+<li>重新启动节点</li>
+</ul>
+</li>
+</ul>
+</div></article></div><div id="disqus_thread"></div></div><script>var disqus_shortname = 'angrypowman';
 var disqus_identifier = '2020/06/23/hadoop节点的增删问题/';
 var disqus_title = 'hadoop节点的增删问题';
 var disqus_url = 'http://6999dog.github.io/2020/06/23/hadoop节点的增删问题/';
