@@ -36,17 +36,14 @@
 </ul>
 <p>​        注意：在这个value里面是自己安装hadoop的路径</p>
 <ul>
-<li><p>建立excludes文件，里面加入要删除节点的信息（IP）</p>
-</li>
-<li><p>更新datanode（在master上面操作）</p>
-<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs dfsadmin -refreshNodes</span><br></pre></td></tr></table></figure></code></pre></li>
+<li>建立excludes文件，里面加入要删除节点的信息（IP）</li>
+<li>更新datanode（在master上面操作）</li>
 </ul>
 </li>
 </ul>
-<p>​                查看节点信息的命令（在master上面操作）</p>
-<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs dfsadmin -report</span><br></pre></td></tr></table></figure></code></pre><p>​                在要移除的节点的信息变成Decommissioned后就可以关闭该节点</p>
-<p>​                在节点上操作</p>
-<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop-daemon.sh stop datanode</span><br></pre></td></tr></table></figure></code></pre><ul>
+<pre><code>hdfs dfsadmin -refreshNodes</code></pre><p>​                         查看节点信息的命令（在master上面操作）</p>
+<pre><code>hdfs dfsadmin -report</code></pre><p>​                        在节点上操作（在要移除的节点的信息变成Decommissioned后就可以关闭该节点）</p>
+<pre><code>hadoop-daemon.sh stop datanode</code></pre><ul>
 <li>重新加入新的节点<ul>
 <li>删除excludes的信息</li>
 <li>重新启动节点</li>
@@ -61,4 +58,4 @@ var disqus_url = 'http://6999dog.github.io/2020/06/23/hadoop节点的增删问�
     var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
     dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-})();</script><script id="dsq-count-scr" src="//angrypowman.disqus.com/count.js" async></script></main><footer class="footer-container"><div class="paginator"><a href="/2020/06/21/%E5%85%B3%E4%BA%8E%E6%8B%8D%E6%91%84%E5%BF%AB%E7%85%A7%E7%9A%84%E9%97%AE%E9%A2%98/" class="next">NEXT</a></div><div class="copyright"><p>© 2017 - 2020 <a href="http://6999dog.github.io">Lu Gang</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/AngryPowman/hexo-theme-prontera" target="_blank">hexo-theme-prontera</a>.</p></div></footer><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"angrypowman",'auto');ga('send','pageview');</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"superSample":2,"width":200,"height":400,"position":"right","hOffset":0,"vOffset":-20},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.2},"log":false});</script></body></html>
+})();</script><script id="dsq-count-scr" src="//angrypowman.disqus.com/count.js" async></script></main><footer class="footer-container"><div class="paginator"><a href="/2020/07/07/%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%9F%B9%E8%AE%AD/" class="prev">PREV</a><a href="/2020/06/21/%E5%85%B3%E4%BA%8E%E6%8B%8D%E6%91%84%E5%BF%AB%E7%85%A7%E7%9A%84%E9%97%AE%E9%A2%98/" class="next">NEXT</a></div><div class="copyright"><p>© 2017 - 2020 <a href="http://6999dog.github.io">Lu Gang</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/AngryPowman/hexo-theme-prontera" target="_blank">hexo-theme-prontera</a>.</p></div></footer><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"angrypowman",'auto');ga('send','pageview');</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"superSample":2,"width":200,"height":400,"position":"right","hOffset":0,"vOffset":-20},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.2},"log":false});</script></body></html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 第一次培训 · Lu Gang</title><meta name="description" content="第一次培训 - Lu Gang"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/css/prontera.css"><link rel="search" type="application/opensearchdescription+xml" href="http://6999dog.github.io/atom.xml" title="Lu Gang"><meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="Lu Gang" type="application/atom+xml">
+</head><body><header class="feature-header"><nav class="component-nav"><ul><div class="logo-container"><a href="/"><h2 class="title">Lu Gang</h2></a></div><a href="/" target="_self" class="li component-nav-item"><p>主页</p></a><a href="/archives" target="_self" class="li component-nav-item"><p>归档</p></a><ul class="shortcut-icons"><a href="https://github.com/AngryPowman" target="_blank"><img src="/images/github.svg" class="icon"></a><a href="/atom.xml" target="_blank"><img src="/images/rss.svg" class="icon"></a></ul></ul></nav></header><main class="container"><div id="post-container"><div class="post"><article class="post-block"><h1 class="post-title">第一次培训</h1><div class="post-info">Jul 7, 2020</div><div class="post-content"><h4 id="主机名和映射"><a href="#主机名和映射" class="headerlink" title="主机名和映射"></a>主机名和映射</h4><p>修改主机名：hotsnamectl set-hostname <hostname></p>
+<p>bash （立即生效）</p>
+<p>注意：需要注意的是，永久修改主机名还需要修改配置文件</p>
+<p>添加映射：vim /etc/hosts</p>
+<p>在hosts文件里面添加ip和对应的主机名</p>
+<a id="more"></a>
+
+<h4 id="时间同步NTP"><a href="#时间同步NTP" class="headerlink" title="时间同步NTP"></a>时间同步NTP</h4><p>选择时区tzselect</p>
+<p>tzselect命令只告诉你选择的时区的写法，并不会生效。</p>
+<p>所以现在还不是你选择的时间</p>
+<p>设置TZ环境变量</p>
+<p>TZ=’Asia/Shanghai’;export TZ</p>
+<h5 id="时间同步协议NTP"><a href="#时间同步协议NTP" class="headerlink" title="时间同步协议NTP"></a>时间同步协议NTP</h5><p>安装ntp:</p>
+<p>yum install -y ntp</p>
+<p>master作为时钟源：</p>
+<p>/etc/ntp.conf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#server 210.72.145.44 #中国国家授时中心的IP</span><br><span class="line">server 127.127.1.0    #local clock</span><br><span class="line">fudge 127.127.1.0 stratum 1</span><br></pre></td></tr></table></figure>
+
+<p>slave 手动同步时间：</p>
+<p>ntpdate master</p>
+<h5 id="定时任务"><a href="#定时任务" class="headerlink" title="定时任务"></a>定时任务</h5><p>crontab是用来定期执行程序的命令</p>
+<p>crontab -h ###查看命令</p>
+<p>例如：</p>
+<p>要求：每十分钟同步一次</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">crontab - e # 写一个定时任务</span><br><span class="line">输入内容： *&#x2F;10**** usr&#x2F;sbin&#x2F;ntpdate master</span><br><span class="line">crontab -l #查看已经设置的命令</span><br></pre></td></tr></table></figure>
+
+<h5 id="ssh-免密"><a href="#ssh-免密" class="headerlink" title="ssh 免密"></a>ssh 免密</h5><ol>
+<li><p>输入ssh-keygen,一路默认回车，也可以直接执行；</p>
+<p>​    ssh-keygen -t dsa -P ‘’ -f ~/.ssh/id_dsa</p>
+</li>
+<li><p>将生成的公钥文件复制到授权列表</p>
+<p>cat ./id_rsa.pub &gt;&gt; authorized_keys</p>
+</li>
+<li><p>将该授权文件authorized_keys文件复制到slaves中的节点</p>
+<p>scp ./authorized_keys root@slave1:~/.ssh/</p>
+</li>
+</ol>
+<p>目的：将ssh/id_rsa.pub(公钥)放在其他机器的authorized_keys中</p>
+<h5 id="jdk安装"><a href="#jdk安装" class="headerlink" title="jdk安装"></a>jdk安装</h5><p>创建工作目录：mkdir -p /usr/java</p>
+<p>下载软件 ：wget <a href="http://xxxx/jdk-8u171-linux-x64.tar.gz" target="_blank" rel="noopener">http://xxxx/jdk-8u171-linux-x64.tar.gz</a></p>
+<p>解压：tar -zxvf jdk-8u171-linux-x64.tar.gz -C /usr/java</p>
+<p>删除软件包：rm -rf /usr/java/jdk-8u171-linux-x64.tar.gz</p>
+<p>环境变量：/etc/profile</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME&#x3D;&#x2F;usr&#x2F;java&#x2F;jdk1.8.0_171</span><br><span class="line">export PATH&#x3D;$PATH:$JAVA_HOME&#x2F;bin</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="zook安装"><a href="#zook安装" class="headerlink" title="zook安装"></a>zook安装</h5><p>下载解压zoo安装包 /usr/zookeeper</p>
+<p>环境变量：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export ZOOKEEPER_HOME&#x3D;&#x2F;usr&#x2F;zookeeper&#x2F;zookeeper-3.4.10</span><br><span class="line">export PATH&#x3D;$PATH:$ZOOKEEPER_HOME&#x2F;bin</span><br></pre></td></tr></table></figure>
+
+<p>配置文件:zoo.cfg</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">tickTime&#x3D;2000 #心跳间隔</span><br><span class="line">initLimit&#x3D;10 #最大初始时间限制10倍心跳</span><br><span class="line">syncLimit&#x3D;5 #请求应答时长5倍心跳</span><br><span class="line">dataDir&#x3D;&#x2F;usr&#x2F;zookeeper&#x2F;zookeeper-3.4.10&#x2F;zkdata #数据目录</span><br><span class="line">clientPort&#x3D;2181 #客户端、服务端连接端口</span><br><span class="line">dataLogDir&#x3D;&#x2F;usr&#x2F;zookeeper&#x2F;zookeeper-3.4.10&#x2F;zkdatalog #日志目录</span><br><span class="line">server.1&#x3D;master:2888:3888 #集群列表</span><br><span class="line">server.2&#x3D;slave1:2888:3888</span><br><span class="line">server.3&#x3D;slave2:2888:3888</span><br></pre></td></tr></table></figure>
+
+<p>注意：mkdir zkdata zkdatalog</p>
+<p>在对应的目录下面自己创建数据生成的文件夹</p>
+<p>在dataDir指定的目录下面，创建一个myid文件。里面内容为一个数字，用来标识当前主机。</p>
+<p>server.X中的X就是myid的数字</p>
+<p>启动命令</p>
+<p>bin/zkServer.sh start  #启动服务</p>
+<p>bin/zkServer.sh status #查看状态</p>
+<h5 id="Hadoop的安装"><a href="#Hadoop的安装" class="headerlink" title="Hadoop的安装"></a>Hadoop的安装</h5><p>下载解压Hadoop的安装包 /usr/hadoop</p>
+<p>设置环境变量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export HADOOOP_HOME&#x3D;&#x2F;usr&#x2F;hadoop&#x2F;hadoop-2.7.3</span><br><span class="line">export PATH&#x3D;$PATH:$HADOOP_HOME&#x2F;bin:$HADOOP_HOME&#x2F;sbin:</span><br></pre></td></tr></table></figure>
+
+<p>主要修改五个文件:</p>
+<p>hadoop-env.sh 用来定义Hadoop运行环境相关的配置信息；</p>
+<p>core-site.xml   定义系统级别的参数，包括HDFS URL、Hadoop临时目录等；</p>
+<p>hdfs-site.xml   定义名称节点、数据节点的存放位置、文本副本的个数、文件读取权限等；</p>
+<p>mapred-site.xml  MapReduce参数</p>
+<p>yarn-site.xml     集群资源管理系统参数配置</p>
+<ul>
+<li><p>hadoop-env.sh</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME&#x3D;&#x2F;usr&#x2F;java&#x2F;jdk1.8.0_171</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>core-site.xml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;property&gt;</span><br><span class="line">  &lt;name&gt;fs.default.name&lt;&#x2F;name&gt;</span><br><span class="line">  &lt;value&gt;hdfs:&#x2F;&#x2F;master:9000&lt;&#x2F;value&gt;</span><br><span class="line"> &lt;&#x2F;property&gt;</span><br><span class="line"> &lt;property&gt;</span><br><span class="line">  &lt;name&gt;hadoop.tmp.dir&lt;&#x2F;name&gt;</span><br><span class="line">  &lt;value&gt;&#x2F;usr&#x2F;hadoop&#x2F;hadoop-2.7.3&#x2F;hdfs&#x2F;tmp&lt;&#x2F;value&gt;</span><br><span class="line">  &lt;description&gt;A base for other temporary directories.&lt;&#x2F;description&gt;</span><br><span class="line"> &lt;&#x2F;property&gt;</span><br><span class="line"> &lt;property&gt;</span><br><span class="line">  &lt;name&gt;io.file.buffer.size&lt;&#x2F;name&gt;</span><br><span class="line">  &lt;value&gt;131072&lt;&#x2F;value&gt;</span><br><span class="line"> &lt;&#x2F;property&gt;</span><br><span class="line"> &lt;property&gt;</span><br><span class="line">  &lt;name&gt;fs.checkpoint.period&lt;&#x2F;name&gt;</span><br><span class="line">  &lt;value&gt;60&lt;&#x2F;value&gt;</span><br><span class="line"> &lt;&#x2F;property&gt;</span><br><span class="line"> &lt;property&gt;</span><br><span class="line">  &lt;name&gt;fs.checkpoint.size&lt;&#x2F;name&gt;</span><br><span class="line">  &lt;value&gt;67108864&lt;&#x2F;value&gt;</span><br><span class="line">&lt;&#x2F;property&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>hdfs-site.xml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;property&gt;</span><br><span class="line"> &lt;name&gt;dfs.replication&lt;&#x2F;name&gt;</span><br><span class="line"> &lt;value&gt;2&lt;&#x2F;value&gt;</span><br><span class="line">&lt;&#x2F;property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line"> &lt;name&gt;dfs.namenode.name.dir&lt;&#x2F;name&gt;</span><br><span class="line"> &lt;value&gt;file:&#x2F;usr&#x2F;hadoop&#x2F;hadoop-2.7.3&#x2F;hdfs&#x2F;name&lt;&#x2F;value&gt;</span><br><span class="line"> &lt;final&gt;true&lt;&#x2F;final&gt;</span><br><span class="line">&lt;&#x2F;property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line"> &lt;name&gt;dfs.datanode.data.dir&lt;&#x2F;name&gt;</span><br><span class="line"> &lt;value&gt;file:&#x2F;usr&#x2F;hadoop&#x2F;hadoop-2.7.3&#x2F;hdfs&#x2F;data&lt;&#x2F;value&gt;</span><br><span class="line"> &lt;final&gt;true&lt;&#x2F;final&gt;</span><br><span class="line">&lt;&#x2F;property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line"> &lt;name&gt;dfs.namenode.secondary.http-address&lt;&#x2F;name&gt;</span><br><span class="line"> &lt;value&gt;master:9001&lt;&#x2F;value&gt;</span><br><span class="line">&lt;&#x2F;property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line"> &lt;name&gt;dfs.webhdfs.enabled&lt;&#x2F;name&gt;</span><br><span class="line"> &lt;value&gt;true&lt;&#x2F;value&gt;</span><br><span class="line">&lt;&#x2F;property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line"> &lt;name&gt;dfs.permissions&lt;&#x2F;name&gt;</span><br><span class="line"> &lt;value&gt;false&lt;&#x2F;value&gt;</span><br><span class="line">&lt;&#x2F;property&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>mapred-site.xml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;property&gt;</span><br><span class="line"> &lt;name&gt;mapreduce.framework.name&lt;&#x2F;name&gt;</span><br><span class="line"> &lt;value&gt;yarn&lt;&#x2F;value&gt;</span><br><span class="line">&lt;&#x2F;property&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>yarn-site.xml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&lt;property&gt;</span><br><span class="line"> &lt;name&gt;yarn.resourcemanager.address&lt;&#x2F;name&gt;</span><br><span class="line"> &lt;value&gt;master:18040&lt;&#x2F;value&gt;</span><br><span class="line">&lt;&#x2F;property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line"> &lt;name&gt;yarn.resourcemanager.scheduler.address&lt;&#x2F;name&gt;</span><br><span class="line"> &lt;value&gt;master:18030&lt;&#x2F;value&gt;</span><br><span class="line">&lt;&#x2F;property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line"> &lt;name&gt;yarn.resourcemanager.webapp.address&lt;&#x2F;name&gt;</span><br><span class="line"> &lt;value&gt;master:18088&lt;&#x2F;value&gt;</span><br><span class="line">&lt;&#x2F;property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line"> &lt;name&gt;yarn.resourcemanager.resource-tracker.address&lt;&#x2F;name&gt;</span><br><span class="line"> &lt;value&gt;master:18025&lt;&#x2F;value&gt;</span><br><span class="line">&lt;&#x2F;property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line"> &lt;name&gt;yarn.resourcemanager.admin.address&lt;&#x2F;name&gt;</span><br><span class="line"> &lt;value&gt;master:18141&lt;&#x2F;value&gt;</span><br><span class="line">&lt;&#x2F;property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line"> &lt;name&gt;yarn.nodemanager.aux-services&lt;&#x2F;name&gt;</span><br><span class="line"> &lt;value&gt;mapreduce_shuffle&lt;&#x2F;value&gt;</span><br><span class="line">&lt;&#x2F;property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line"> &lt;name&gt;yarn.nodemanager.auxservices.mapreduce.shuffle.class&lt;&#x2F;name&gt;</span><br><span class="line"> &lt;value&gt;org.apache.hadoop.mapred.ShuffleHandler&lt;&#x2F;value&gt;</span><br><span class="line">&lt;&#x2F;property&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<p>格式化并启动Hadoop</p>
+<p>hadoop namenode -format</p>
+<p>start-all.sh</p>
+<h5 id="添加删除节点"><a href="#添加删除节点" class="headerlink" title="添加删除节点"></a>添加删除节点</h5><p>添加节点：</p>
+<ol>
+<li><p>基础操作 本地源、防火墙、时区、同步时间等；</p>
+</li>
+<li><p>修改hosts文件 所有文件添加slave3</p>
+</li>
+<li><p>免密操作 master–&gt;slave3</p>
+</li>
+<li><p>安装JDK Hadoop 配置环境变量</p>
+</li>
+<li><p>修改所有的slaves文件：添加slave3</p>
+</li>
+<li><p>启动DataNode进程：hadoop-daemon.sh start datanode</p>
+</li>
+<li><p>启动nodemanage：yarn-daemon.sh start nodemanege</p>
+</li>
+<li><p>查看集群状态</p>
+<ul>
+<li><p>主节点刷新：hdfs dfsadmin -refreshNodes</p>
+</li>
+<li><p>均衡block:sbin/start-balancer.sh</p>
+</li>
+<li><p>查看存活的节点：hdfs dfsadmin -report</p>
+</li>
+</ul>
+</li>
+</ol>
+<p>临时删除节点；</p>
+<p>hadoop-daemon.sh stop datanode</p>
+<p>hadoop-daemon.sh stop tasktracker</p>
+<p>可能会造成数据丢失</p>
+<p>删除节点;</p>
+<p>master主机中的hdfs-site.xml配置；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;property&gt;</span><br><span class="line">	&lt;name&gt;dfs.hosts.excludes&lt;&#x2F;name&gt;</span><br><span class="line">	&lt;value&gt;&#x2F;usr&#x2F;hadoop&#x2F;hadoop-2.7.3&#x2F;etc&#x2F;hadoop&#x2F;excludes&lt;&#x2F;value&gt;</span><br><span class="line">	&lt;description&gt;拒绝加入集群的节点列表&lt;&#x2F;description&gt;</span><br><span class="line">&lt;&#x2F;property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">	&lt;name&gt;dfs.hosts&lt;&#x2F;hosts&gt;</span><br><span class="line">	&lt;value&gt;&#x2F;usr&#x2F;hadoop&#x2F;hadoop-2.7.3&#x2F;etc&#x2F;hadoop&#x2F;datanode-allow.list&lt;&#x2F;value&gt;</span><br><span class="line">	&lt;description&gt;允许加入集群的节点列表&lt;&#x2F;description&gt;</span><br><span class="line">&lt;&#x2F;property&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在conf目录下创建一个excludes文件，将需要删除的节点机器名添加到文件中。</p>
+<p>vim /usr/hadoop/hadoop-2.7.3/etc/hadoop/excludes</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">slave2</span><br></pre></td></tr></table></figure>
+
+<p>主节点刷新所有的DataNode：hdfs dfsadmin -refreshNodes</p>
+<p>查看存货的节点：hdfs dfsadmin -report</p>
+<p>可以看到该datanode状态转为Decommission In Progress（退役）</p>
+<p>执行完毕之后显示Decommission Status：Decommissioned</p>
+<p>删除节点上关闭进程（salve2)</p>
+<p>sbin/hadoop-daemon.sh stop datanode</p>
+<p>sbin/yarn-daemon.sh stop nodemanager</p>
+<p>数据块重新分布：sbin/start-balancer.sh（数据均衡）</p>
+<p>从NameNode的excludes文件及 slaves文件、hosts文件中去掉已经移除的主机名</p>
+<p>在所有的DataNode上执行hadoop-pull.sh脚本，同步配置</p>
+<p>YARN集群的端口8088</p>
+<p>start-yarn.sh #开启yarn集群</p>
+</div></article></div><div id="disqus_thread"></div></div><script>var disqus_shortname = 'angrypowman';
+var disqus_identifier = '2020/07/07/第一次培训/';
+var disqus_title = '第一次培训';
+var disqus_url = 'http://6999dog.github.io/2020/07/07/第一次培训/';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//angrypowman.disqus.com/count.js" async></script></main><footer class="footer-container"><div class="paginator"><a href="/2020/06/23/hadoop%E8%8A%82%E7%82%B9%E7%9A%84%E5%A2%9E%E5%88%A0%E9%97%AE%E9%A2%98/" class="next">NEXT</a></div><div class="copyright"><p>© 2017 - 2020 <a href="http://6999dog.github.io">Lu Gang</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/AngryPowman/hexo-theme-prontera" target="_blank">hexo-theme-prontera</a>.</p></div></footer><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"angrypowman",'auto');ga('send','pageview');</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"superSample":2,"width":200,"height":400,"position":"right","hOffset":0,"vOffset":-20},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.2},"log":false});</script></body></html>
