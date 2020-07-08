@@ -1,0 +1,71 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 第三次培训 · Lu Gang</title><meta name="description" content="第三次培训 - Lu Gang"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/css/prontera.css"><link rel="search" type="application/opensearchdescription+xml" href="http://6999dog.github.io/atom.xml" title="Lu Gang"><meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="Lu Gang" type="application/atom+xml">
+</head><body><header class="feature-header"><nav class="component-nav"><ul><div class="logo-container"><a href="/"><h2 class="title">Lu Gang</h2></a></div><a href="/" target="_self" class="li component-nav-item"><p>主页</p></a><a href="/archives" target="_self" class="li component-nav-item"><p>归档</p></a><ul class="shortcut-icons"><a href="https://github.com/AngryPowman" target="_blank"><img src="/images/github.svg" class="icon"></a><a href="/atom.xml" target="_blank"><img src="/images/rss.svg" class="icon"></a></ul></ul></nav></header><main class="container"><div id="post-container"><div class="post"><article class="post-block"><h1 class="post-title">第三次培训</h1><div class="post-info">Jul 7, 2020</div><div class="post-content"><h4 id="数据爬取"><a href="#数据爬取" class="headerlink" title="数据爬取"></a>数据爬取</h4><h5 id="比赛中可能会遇到的环境"><a href="#比赛中可能会遇到的环境" class="headerlink" title="-  比赛中可能会遇到的环境"></a>-  比赛中可能会遇到的环境</h5><p>商城爬取/加载数据/数据分析</p>
+<blockquote>
+<p>ShopXO商城</p>
+</blockquote>
+<p>pip list</p>
+<p>查看已安装的库</p>
+<a id="more"></a>
+
+<p>requests库：是实现简单的http请求的库</p>
+<p>response.text #使用文本的形式查看</p>
+<p>200：请求成功，返回请求数据 #状态码，查看返回状态</p>
+<blockquote>
+<p>.content #以字节方式查看响应内容</p>
+<p>.text #以文本的方式查看响应内容</p>
+</blockquote>
+<ul>
+<li><p>xpath</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from lxml</span><br><span class="line">html&#x3D;response.text</span><br><span class="line"></span><br><span class="line">element&#x3D;etree.HTML(html)</span><br><span class="line">title&#x3D;element.xpath(&#39;对应的路径&#39;)</span><br><span class="line">print(title)</span><br></pre></td></tr></table></figure>
+
+<p>在进行多次信息提取的时候，需要用到循环</p>
+<p>response.status_code #状态码</p>
+<p>判断是否200</p>
+</li>
+</ul>
+<h5 id="数据载入分析"><a href="#数据载入分析" class="headerlink" title="数据载入分析"></a>数据载入分析</h5><ol>
+<li><p>根据要求爬取数据</p>
+</li>
+<li><p>将数据写入hive</p>
+<ul>
+<li>根据自己的数据格式建表（分隔符等）</li>
+</ul>
+</li>
+<li><p>对数据进行分析</p>
+<ul>
+<li><p>数据分片</p>
+</li>
+<li><p>浏览排名</p>
+</li>
+<li><p>··· ···</p>
+</li>
+</ul>
+</li>
+</ol>
+<h5 id="回顾与注意事项"><a href="#回顾与注意事项" class="headerlink" title="回顾与注意事项"></a>回顾与注意事项</h5><ul>
+<li><p>时间同步</p>
+<p>在环境变量里面加入时间，将master作为时钟源</p>
+<p>记得在子节点进行时间同步</p>
+<p>slave1,slave2</p>
+</li>
+<li><p>免密设置</p>
+</li>
+<li><p>集群部署（JDK/ZOO/Hadoop）</p>
+<p>zoo的myid</p>
+<p>后台运行加&amp;</p>
+</li>
+<li><p>集群增加删除，注意并行和串行的顺序</p>
+</li>
+<li></li>
+</ul>
+<h5 id="日志分析"><a href="#日志分析" class="headerlink" title="日志分析"></a>日志分析</h5><p>报错的时候，经常查看日志的报错信息</p>
+<p>熟悉日志文件所在位置</p>
+</div></article></div><div id="disqus_thread"></div></div><script>var disqus_shortname = 'angrypowman';
+var disqus_identifier = '2020/07/07/第三次培训/';
+var disqus_title = '第三次培训';
+var disqus_url = 'http://6999dog.github.io/2020/07/07/第三次培训/';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//angrypowman.disqus.com/count.js" async></script></main><footer class="footer-container"><div class="paginator"><a href="/2020/07/08/echarts%E5%AD%A6%E4%B9%A0/" class="prev">PREV</a><a href="/2020/07/07/%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%9F%B9%E8%AE%AD/" class="next">NEXT</a></div><div class="copyright"><p>© 2017 - 2020 <a href="http://6999dog.github.io">Lu Gang</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/AngryPowman/hexo-theme-prontera" target="_blank">hexo-theme-prontera</a>.</p></div></footer><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"angrypowman",'auto');ga('send','pageview');</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"superSample":2,"width":200,"height":400,"position":"right","hOffset":0,"vOffset":-20},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.2},"log":false});</script></body></html>
